@@ -3,61 +3,66 @@
 
 #define TAMA 100
 
-struct 
+typedef struct Tarea 
 {
     int TareaID; // Numerico autoincremental comenzando en 1000
     char *Descripcion;
     int Duracion; // entre 10 - 100
-}typedef Tarea;
+} Tarea;
 
-struct 
+typedef struct nodoT 
 {
-    Tarea T;
-    nodoT * siguiente;
+    Tarea tarea;
+    struct nodoT * siguiente;
     
-} typedef nodoT;
+}nodoT;
 
 nodoT * CreaLilstaVacia();
-nodoT * CrearNuevaTarea(char * descripcion, int duracion, int id);
-void insertarNodo(nodoT **star, nodoT * nodoTnum);
+nodoT * CrearNuevaTarea(char * descripcion, int duracion, int * Pid);
+void insertarNodo(nodoT **start, nodoT * nodoTnum);
+
 int main () {
 
-    int id = 1000, duracion, menu = 1;
-    char * Tarea[TAMA];
-
-    printf("Creacion de tareas pendientes:\nIngrese una descripcion de la tearea: ");
-    
-    gets(Tarea);
-
-    printf("Igrese la duracion en horas de la tarea: ");
+    int duracion, id = 1000, *pid;
+    pid= &id;
+    char descripcion[TAMA];
+    printf("Creando tareas pendientes\n");
+    printf("Ingrese una descripcion de la tarea peniente: ");
+    gets(descripcion);
+    printf("Ingrese la duracion de la tarea en horas (entre 10 y  100): ");
     scanf("%d", &duracion);
 
-    nodoT * StarPendientes = CreaLilstaVacia();
-    nodoT * nodoT1 = CrearNuevaTarea(Tarea,duracion,id);
-    insertarNodo(&*StarPendientes, &nodoT1);
+    nodoT * Pendientestart = CreaLilstaVacia();
+    
+    nodoT * nodoT1 = CrearNuevaTarea(descripcion, duracion, pid);
+    insertarNodo(&Pendientestart, nodoT1);
 
+    nodoT * aux = Pendientestart;
 
-
-    nodoT * StartRealizadas = CreaLilstaVacia;
-    nodoT * TareasRealizadas = CrearNuevaTarea;
-
-    return 0;
+    while (aux)
+    {
+        printf("Duracion: %d", aux->tarea.Duracion);
+        printf("\nDescripcion: %s", aux->tarea.Descripcion);
+        printf("\nId: %d", aux->tarea.TareaID);
+        
+        aux = aux->siguiente;
+    }
+    
 }
-
 nodoT * CreaLilstaVacia() {
     return NULL;
 }
-nodoT * CrearNuevaTarea(char * descripcion, int duracion, int id){
+nodoT * CrearNuevaTarea(char * descripcion, int duracion, int * Pid){
     nodoT * NuevaTarea = (nodoT *) malloc(sizeof(nodoT));
-    NuevaTarea->T.TareaID = id;
-    NuevaTarea->T.Duracion = duracion;
-    NuevaTarea->T.Descripcion = descripcion; 
+    NuevaTarea->tarea.TareaID = * Pid;
+    NuevaTarea->tarea.Duracion = duracion;
+    NuevaTarea->tarea.Descripcion = descripcion; 
     NuevaTarea->siguiente = NULL;
+    *Pid++;
     return NuevaTarea;
 }
 void insertarNodo(nodoT **start, nodoT * nodoTnum) {
 
     nodoTnum->siguiente = *start;
     *start = nodoTnum;
-    
 }
