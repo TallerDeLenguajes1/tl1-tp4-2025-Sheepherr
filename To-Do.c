@@ -21,9 +21,12 @@ nodoT * CreaLilstaVacia();
 nodoT * CrearNuevaTarea(char * descripcion, int duracion, int * Pid);
 void insertarNodo(nodoT **start, nodoT * nodoTnum);
 void mostrarTareas(nodoT * start);
+
+
+
 int main () {
 
-    int duracion, id = 1000, *pid;
+    int duracion, id = 1000, *pid, menu = 1;
     pid= &id;
     char descripcion[TAMA];
     printf("Creando tareas pendientes\n");
@@ -31,16 +34,34 @@ int main () {
     fgets(descripcion, sizeof(descripcion), stdin);
     printf("Ingrese la duracion de la tarea en horas (entre 10 y  100): ");
     scanf("%d", &duracion);
-
     nodoT * Pendientestart = CreaLilstaVacia();
     
-    nodoT * nodoT1 = CrearNuevaTarea(descripcion, duracion, pid);
-    insertarNodo(&Pendientestart, nodoT1);
-    mostrarTareas(Pendientestart);
+    while (menu != 0)
+    {   
+        nodoT * nodoT1 = CrearNuevaTarea(descripcion, duracion, pid);
+        insertarNodo(&Pendientestart, nodoT1);
+        mostrarTareas(Pendientestart);
+
+        printf("Desea agregar una nueva tarea? Ingrese 0 si desea salir o ingrese 1 si desea crear una nueva tarea: ");
+        scanf("%d", &menu);
+        if (menu == 1)
+        {
+            printf("Creando tareas pendientes\n");
+            printf("Ingrese una descripcion de la tarea peniente: ");
+            fgets(descripcion, sizeof(descripcion), stdin);
+            printf("Ingrese la duracion de la tarea en horas (entre 10 y  100): ");
+            scanf("%d", &duracion);
+        }
+        
+    }
+
 
     
+    return 0;
     
 }
+
+
 nodoT * CreaLilstaVacia() {
     return NULL;
 }
@@ -50,7 +71,7 @@ nodoT * CrearNuevaTarea(char * descripcion, int duracion, int * Pid){
     NuevaTarea->tarea.Duracion = duracion;
     NuevaTarea->tarea.Descripcion = descripcion; 
     NuevaTarea->siguiente = NULL;
-    *Pid++;
+    (*Pid)++;
     return NuevaTarea;
 }
 void insertarNodo(nodoT **start, nodoT * nodoTnum) {
