@@ -306,7 +306,7 @@ void liberarMemoria(nodoT * start)
 void mostrarTarea(nodoT * tarea) 
 {
     printf("==========\n");
-    printf("Descipcion: %s\nTiempo en horas: %d\nId: %d\n", tarea->tarea.Descripcion, tarea->tarea.Duracion, tarea->tarea.TareaID);
+    printf("Descripcion: %s\nTiempo en horas: %d\nId: %d\n", tarea->tarea.Descripcion, tarea->tarea.Duracion, tarea->tarea.TareaID);
     printf("==========\n");
 
 }
